@@ -66,7 +66,7 @@ function buildLines() {
   lines.push('  },');
   lines.push('  "format": "' + event.format + '",');
   lines.push('  "registration": {');
-  lines.push('    "url": "' + event.registrationURL + '", // Click me to sign up!');
+  lines.push('    "url": "' + event.registrationURL + '", // Click me!');
   lines.push('    "maxAttendance": ' + event.registrationCap);
   lines.push('  },');
   lines.push('  "notes": [');
@@ -78,6 +78,20 @@ function buildLines() {
   return lines;
 }
 
+function findCommentIndex(line) {
+  let inString = false;
+  for (let i = 0; i < line.length - 1; i++) {
+    const ch = line[i];
+    if (ch === '"' && line[i - 1] !== '\\') {
+      inString = !inString;
+    }
+    if (!inString && line[i] === '/' && line[i + 1] === '/') {
+      return i;
+    }
+  }
+  return -1;
+}
+
 function renderCode() {
   const lines = buildLines();
   const ol = document.createElement('ol');
@@ -85,7 +99,7 @@ function renderCode() {
   
   lines.forEach(raw => {
     const li = document.createElement('li');
-    const commentIndex = raw.lastIndexOf('//');
+    const commentIndex = findCommentIndex(raw);
     let codePart = commentIndex === -1 ? raw : raw.slice(0, commentIndex);
     let commentPart = commentIndex === -1 ? '' : raw.slice(commentIndex);
 
