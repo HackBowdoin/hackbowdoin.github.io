@@ -7,7 +7,7 @@ const event = {
   venue: "Barry Mills Hall",
   location: "Bowdoin College, Brunswick, ME",
   format: "In-person, Individuals or teams of up to 4",
-  registrationURL: "Coming soon...",
+  registrationURL: "<a href='https://forms.gle/fZyPN9LfKVio2ZW99' target='_blank' rel='noopener'>https://forms.gle/fZyPN9LfKVio2ZW99</a>",
   registrationCap: "150",
   notes: ["Open to all Bates, Bowdoin, and Colby students!", "Breakfast, lunch, and snacks provided!"]
 };
@@ -26,7 +26,7 @@ const faqs = [{
   icon: '✏️',
   title: 'How do I sign up?',
   user: 'How can I register for the hackathon?',
-  ai: 'Unfortunately, you can\'t register yet... 😅<br><br>The organizers are still hard at work finalizing the last few details!<br><br>However, the hackathon will begin accepting sign-ups soon!<br><br>This page will be updated to include a registration link once it is available.'
+  ai: 'You can register for the hackathon by filling out the following form:<br><a href="https://forms.gle/fZyPN9LfKVio2ZW99" target="_blank" rel="noopener">https://forms.gle/fZyPN9LfKVio2ZW99</a><br><br>Our max attendance is 150 students.'
 }, {
   icon: '📍',
   title: 'How do I get there?',
@@ -42,6 +42,11 @@ const faqs = [{
   title: 'Are there prizes?',
   user: 'Will I be able to win anything?',
   ai: 'This hackathon is not meant to be a competition so there will not be prizes in the traditional sense.<br><br>However, we hope to recognize the efforts of all attendees with fun mementos and highlight all standout projects.'
+}, {
+  icon: '❓',
+  title: 'What if I have other questions?',
+  user: 'Who can I contact if I have more questions?',
+  ai: 'Please contact Christopher Martin (<a href="mailto:c.martin@bowdoin.edu">c.martin@bowdoin.edu</a>) if you have any additional questions about the hackathon not covered by my FAQ.'
 }];
 
 /* ----------------- Editor rendering ----------------- */
@@ -61,7 +66,7 @@ function buildLines() {
   lines.push('  },');
   lines.push('  "format": "' + event.format + '",');
   lines.push('  "registration": {');
-  lines.push('    "url": "<i>' + event.registrationURL + '</i>", // TODO');
+  lines.push('    "url": "' + event.registrationURL + '", // Click me to sign up!');
   lines.push('    "maxAttendance": ' + event.registrationCap);
   lines.push('  },');
   lines.push('  "notes": [');
@@ -77,17 +82,17 @@ function renderCode() {
   const lines = buildLines();
   const ol = document.createElement('ol');
   ol.className = 'lines';
+  
   lines.forEach(raw => {
     const li = document.createElement('li');
-    const commentIndex = raw.indexOf('//');
+    const commentIndex = raw.lastIndexOf('//');
     let codePart = commentIndex === -1 ? raw : raw.slice(0, commentIndex);
     let commentPart = commentIndex === -1 ? '' : raw.slice(commentIndex);
 
-    codePart = codePart.replace(/\"(.*?)\"(?=\s*:)/g, '<span class="tok-key">"$1"</span>');
-    codePart = codePart.replace(/:\s*\"(.*?)\"/g, ': <span class="tok-str">"$1"</span>');
-    codePart = codePart.replace(/\b(true|false|null)\b/g, '<span class="tok-bool">$1</span>');
-    codePart = codePart.replace(/(\d+)/g, '<span class="tok-num">$1</span>');
-
+    codePart = codePart.replace(/"([^"]+)"(?=\s*:)/g, '<span class="tok-key">"$1"</span>');
+    codePart = codePart.replace(/:\s*"([^"]*)"/g, ': <span class="tok-str">"$1"</span>');
+    codePart = codePart.replace(/\b\d+\b(?![^"]*")/g, '<span class="tok-num">$&</span>');
+    codePart = codePart.replace(/\b(true|false|null)\b(?![^"]*")/g, '<span class="tok-bool">$1</span>');
     commentPart = commentPart.replace(/(&lt;\/)?\/\/.*$/g, function(m) {
       return '<span class="tok-comment">' + m.replace(/&lt;/g, '<').replace(/&gt;/g, '>') + '</span>';
     });
