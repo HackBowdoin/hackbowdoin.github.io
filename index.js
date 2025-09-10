@@ -7,7 +7,7 @@ const event = {
   venue: "Barry Mills Hall",
   location: "Bowdoin College, Brunswick, ME",
   format: "In-person, Individuals or teams of up to 4",
-  registrationURL: "<a href='https://forms.gle/fZyPN9LfKVio2ZW99' target='_blank' rel='noopener'>https://forms.gle/fZyPN9LfKVio2ZW99</a>",
+  registrationURL: "<a href='https://bowdoin.joinhandshake.com/edu/events/1818836' target='_blank' rel='noopener'>https://bowdoin.joinhandshake.com/</a>",
   registrationCap: "150",
   notes: ["Open to all Bates, Bowdoin, and Colby students!", "Breakfast, lunch, and snacks provided!"]
 };
@@ -26,7 +26,7 @@ const faqs = [{
   icon: '✏️',
   title: 'How do I sign up?',
   user: 'How can I register for the hackathon?',
-  ai: 'You can register for the hackathon by filling out the following form:<br><a href="https://forms.gle/fZyPN9LfKVio2ZW99" target="_blank" rel="noopener">https://forms.gle/fZyPN9LfKVio2ZW99</a><br><br>Our max attendance is 150 students.'
+  ai: 'You can register for the hackathon by logging onto <a href="https://bowdoin.joinhandshake.com/edu/events/1818836" target="_blank" rel="noopener">Handshake</a> and filling out the registration form!<br><br>Our max attendance for the event is 150 students, but you can join a waitlist if we reach that cap.'
 }, {
   icon: '📍',
   title: 'How do I get there?',
